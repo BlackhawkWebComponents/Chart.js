@@ -773,6 +773,7 @@
 			helpers.cancelAnimFrame.call(root, this.animationFrame);
 			return this;
 		},
+        /**
 		resize : function(callback){
 			this.stop();
 			var canvas = this.chart.canvas,
@@ -788,7 +789,22 @@
 				callback.apply(this, Array.prototype.slice.call(arguments, 1));
 			}
 			return this;
-		},
+		},**/
+        resize : function(callback){
+            this.stop();
+            var canvas = this.chart.canvas,
+                newWidth = this.chart.canvas.parentNode.clientWidth,
+                newHeight = this.chart.height;
+            canvas.width = this.chart.width = newWidth;
+            canvas.height =  this.chart.height = newHeight;
+
+            retinaScale(this.chart);
+
+            if (typeof callback === "function"){
+                callback.apply(this, Array.prototype.slice.call(arguments, 1));
+            }
+            return this;
+        },
 		reflow : noop,
 		render : function(reflow){
 			if (reflow){
